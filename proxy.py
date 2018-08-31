@@ -561,7 +561,7 @@ def main():
     hostname = args.hostname
     #port = int(args.port)
     from os import getenv
-    port=getenv('PORT',8899)
+    port=int(getenv('PORT',args.port))
     try:
         proxy = HTTP(hostname, port)
         proxy.run()
