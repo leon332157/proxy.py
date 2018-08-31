@@ -546,6 +546,8 @@ class HTTP(TCP):
         logger.debug('Started process %r to handle connection %r' % (proc, client.conn))
 
 def main():
+    from os import environ
+    print(environ)
     parser = argparse.ArgumentParser(
         description='proxy.py v%s' % __version__,
         epilog='Having difficulty using proxy.py? Report at: %s/issues/new' % __homepage__
