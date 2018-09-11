@@ -3,9 +3,9 @@
 """
     proxy.py
     ~~~~~~~~
-    
+
     HTTP Proxy Server in Python.
-    
+
     :copyright: (c) 2013 by Abhinav Singh.
     :license: BSD, see LICENSE for more details.
 """
@@ -18,7 +18,7 @@ __homepage__ = 'https://github.com/abhinavsingh/proxy.py'
 __license__ = 'BSD'
 
 import sys
-import multiprocessing
+import threading
 import datetime
 import argparse
 import logging
@@ -322,9 +322,9 @@ class ProxyConnectionFailed(ProxyError):
         return '<ProxyConnectionFailed - %s:%s - %s>' % (self.host, self.port, self.reason)
 
 
-class Proxy(multiprocessing.Process):
+class Proxy(threading.Thread):
     """HTTP proxy implementation.
-    
+
     Accepts connection object and act as a proxy between client and server.
     """
 
@@ -387,7 +387,7 @@ class Proxy(multiprocessing.Process):
                 raise ProxyConnectionFailed(host, port, repr(e))
 
             # for http connect methods (https requests)
-            # queue appropriate response for client 
+            # queue appropriate response for client
             # notifying about established connection
             if self.request.method == b"CONNECT":
                 self.client.queue(self.connection_established_pkt)
@@ -551,7 +551,7 @@ class TCP(object):
 
 class HTTP(TCP):
     """HTTP proxy server implementation.
-    
+
     Spawns new process to proxy accepted client connection.
     """
 
