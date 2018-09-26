@@ -282,8 +282,7 @@ class Connection(object):
 
     def flush(self):
         sent = self.send(self.buffer)
-        del self.buffer
-        self.buffer=b''
+        self.buffer = b''
         #self.buffer = self.buffer[sent:]
         #from time import sleep
         #sleep(2)
